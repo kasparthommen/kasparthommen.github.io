@@ -7,8 +7,8 @@ Let's say you have two classes, `Foo` and `Bar` with the following constraints:
 - `Foo` must refer to a `Bar` object and vice-versa.
 - The fields storing references to the other object must be final (i.e., you
   can't construct one and then set it on the other).
-- As you cannot construct both objects and then link them (because of `final` fields)
-  you could instead defer the construction of `Bar` to the `Foo` constructor
+- As you cannot construct both objects and then link them (due to the fields being
+  `final`), you could instead defer the construction of `Bar` to the `Foo` constructor
   and call `this.bar = new Bar(this)` there. However, if
   `Bar` has additional constructor arguments, you would have to pass them into 
   the `Foo` constructor as well, thus polluting it. We don't want that.
