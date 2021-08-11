@@ -1,6 +1,6 @@
 # Elegant construction of objects referring to each other in final fields
 
-It recently struck me that [Java Lambda Expressions](https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
+Recently, it struck me that [Java Lambda Expressions](https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
 allow me to solve a problem I recently had quite elegantly.
 
 Let's say you have two classes, `Foo` and `Bar` with the following constraints:
