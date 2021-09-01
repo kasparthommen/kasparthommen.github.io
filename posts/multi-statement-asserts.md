@@ -3,7 +3,7 @@
 So you want to assert something in your Java code, but that "something" requires
 a few lines of code to compute? There are two solutions to this problem.
 
-##Put the code to assert into a method
+## Put the code to assert into a method
 
 ```java
 class MultiStatementAsserts1 {
@@ -27,7 +27,7 @@ That works, but goes against the philosophy that asserts should be non-invasive,
 adding a dedicated method just for an assert is quite invasive. Can we do better? Yes, with `BooleanSupplier` (which, if required, can capture local
 variables and/or state):
 
-##Asserting the result of a boolean supplier
+## Asserting the result of a boolean supplier
 
 ```java
 class MultiStatementAsserts2 {
