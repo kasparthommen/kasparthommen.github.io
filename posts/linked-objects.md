@@ -36,13 +36,12 @@ class Bar {
 
 public class LinkedObjects {
     public static void main(String[] args) {
-        int barExtraArgs = 42;
-        int fooExtraArgs = 666;
-        
         // controlling 'Bar' construction
+        int barExtraArgs = 42;
         Function<Foo, Bar> barCreator = foo -> new Bar(foo, barExtraArgs);
         
         // controlling 'Foo' construction
+        int fooExtraArgs = 666;
         Foo foo = new Foo(barCreator, fooExtraArgs);
     }
 }
