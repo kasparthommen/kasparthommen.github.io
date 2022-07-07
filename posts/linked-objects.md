@@ -43,7 +43,7 @@ public class LinkedObjects {
         Function<Foo, Bar> barCreator = foo -> new Bar(foo, barExtraArgs);
         
         // controlling 'Foo' construction
-        Foo foo = new Foo(fooCreator, fooExtraArgs);
+        Foo foo = new Foo(barCreator, fooExtraArgs);
     }
 }
 ```
