@@ -50,7 +50,7 @@ $$
 
 which leads us to the empirical Sharpe ratio:
 
-$$SR_\{emp} = \frac{\bar R}{\sigma(R)}$$
+$$SR_\text{emp} = \frac{\bar R}{\sigma(R)}$$
 
 
 ## The conundrum
@@ -73,7 +73,7 @@ Quite a bumpy ride! Let's compute the numerator of the empirical Sharpe ratio (i
 $$
 \begin{align}
 \bar r &= \frac{1}{4} (0.5 - 0.4 + 0.5 - 0.4) = 0.05 > 0\\
-\Rightarrow SR_\{emp} &> 0
+\Rightarrow SR_\text{emp} &> 0
 \end{align}
 $$
 
