@@ -1,3 +1,7 @@
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 # The Sharpe Ratio Conundrum
 **TL; DR:** The Sharpe ratio computed using the typical definition can be positive while the compounded
 return can be negative, and vice-versa. This can be solved by using log returns in the Sharpe ratio
