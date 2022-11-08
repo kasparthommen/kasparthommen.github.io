@@ -1,6 +1,5 @@
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
 
 # The Sharpe Ratio Conundrum
 **TL; DR:** The Sharpe ratio computed using the typical definition can be positive while the compounded
