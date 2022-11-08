@@ -41,7 +41,7 @@ are denoted $r_i$ depending on prices $p_i$ and $p_{i-1}$ at the end of years $i
 
 $$
 \begin{align}
-r_i &= \frac{p_i-p_{i-1}}{p_{i-1}}\\
+r_i &\triangleq \frac{p_i-p_{i-1}}{p_{i-1}}\\
 \bar r &\triangleq \frac{1}{n} \sum_{i=1}^n r_i \\
 \sigma(r) &\triangleq \frac{1}{n} \sqrt{\sum_{i=1}^n (r_i - \bar r)^2}
 \end{align}
@@ -49,21 +49,21 @@ $$
 
 which leads us to the empirical Sharpe ratio:
 
-$$SR_\text{emp} = \frac{\bar R}{\sigma(R)}$$
+$$SR_\text{emp} \triangleq \frac{\bar R}{\sigma(R)}$$
 
 
 ## The conundrum
 Let us now assume that the year-end prices of our (very volatile,
-and ultimately losing) investment had the following year-end prices (with some abuse of notation):
+and ultimately losing) investment had the following year-end prices:
 
-$$p_i = [100, 150, 90, 135, 81]$$
+$$p = (100, 150, 90, 135, 81)^\intercal$$
 
 Therefore, the returns are
 
 $$
 \begin{align}
-r_i &= [(150-100)/100, (90-150)/150, (135-90)/90, (81-135)/135] \\
-&= [0.5, -0.4, 0.5, -0.4]
+r &= ((150-100)/100, (90-150)/150, (135-90)/90, (81-135)/135)^\intercal \\
+&= (0.5, -0.4, 0.5, -0.4)^\intercal
 \end{align}
 $$
 
