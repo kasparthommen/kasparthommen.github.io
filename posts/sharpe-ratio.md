@@ -78,8 +78,7 @@ $$
 
 This mean that **the Sharpe ratio is positive, but our investment has lost money**! This doesn't make sense,
 at least not to me. The Sharpe ratio should have the *same* sign as the overall return (which is
-negative as the prices goes from 
-0 to 81), but it doesn't.
+negative as the prices drops from 100 to 81), but it doesn't.
 
 At this point, you might object, arguing that I should have **compounded the returns** rather than
 simply average them. After all, returns are cumulative, and two consecutive 10 % returns lead to
