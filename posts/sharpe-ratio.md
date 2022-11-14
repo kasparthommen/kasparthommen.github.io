@@ -24,7 +24,7 @@ the return of the investment, $r_\text{inv}$, minus the risk-free rate, $r_\text
 [Typically](https://en.wikipedia.org/wiki/Sharpe_ratio), the
 Sharpe ratio is [expressed](https://www.investopedia.com/terms/s/sharperatio.asp) using the following formula:
 
-$$SR = \frac{\operatorname{E}(r_\text{inv} - r_\text{rf})}{\sqrt{\operatorname{Var}(r_\text{inv} - r_\text{rf})}}$$
+$$\textit{SR} = \frac{\operatorname{E}(r_\text{inv} - r_\text{rf})}{\sqrt{\operatorname{Var}(r_\text{inv} - r_\text{rf})}}$$
 
 A high Sharpe ratio means that your investment either has high returns, low volatility,
 or both, both of which are desirable properties of an investment. The higher the Sharpe ratio, the smoother the
@@ -49,7 +49,7 @@ $$
 
 which leads us to the empirical Sharpe ratio:
 
-$$SR_\text{emp} \triangleq \frac{\bar R}{\sigma(R)}$$
+$$\textit{SR}_\text{emp} \triangleq \frac{\bar R}{\sigma(R)}$$
 
 
 ## The conundrum
@@ -72,7 +72,7 @@ Quite a bumpy ride! Let's compute the numerator of the empirical Sharpe ratio (i
 $$
 \begin{align}
 \bar r &= \frac{1}{4} (0.5 - 0.4 + 0.5 - 0.4) = 0.05 > 0\\
-\Rightarrow SR_\text{emp} &> 0
+\Rightarrow \textit{SR}_\text{emp} &> 0
 \end{align}
 $$
 
