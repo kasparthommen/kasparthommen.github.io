@@ -105,7 +105,7 @@ $$
 
 Note that the last equation corresponds to the annualized compounded log return. Hence, the Sharpe
 ratio computed with log returns has the same sign as the (annualized compounded log) return.
-Conundrum solved!
+Conundrum resolved!
 
 
 ## Conclusion
