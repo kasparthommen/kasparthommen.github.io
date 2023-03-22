@@ -1,15 +1,25 @@
-# A Better Exponential Smoothing Filter
+# A Better Low-Pass Filter
 
-If you are familiar with statistics, electronics or
-[DSP](https://en.wikipedia.org/wiki/Digital_signal_processing), you may
-have heard of one of the following terms:
-- Exponential moving average (EMA)
-- Exponentially-weighted moving average (EWMA)
-- RC filter
-- First-order lowpass filter
+The two most popular low-pass filters (in DSP lingo) or moving averages
+(in the statistics world) are arguably the following:
 
-I will stick the last one on the list from now on. The
-[Laplace](https://en.wikipedia.org/wiki/Laplace_transform)
-[transfer function](https://en.wikipedia.org/wiki/Transfer_function) of such a filter is
+- Simple moving average (SMA) aka FIR filter
+- Exponential moving average (EMA or EWMA) aka first-order lowpass filter
 
-$$H(s) = dd$$
+Let's say we want to average over a window length of 5 samples with the SMA
+and compare that to a first-order lowpass filter ("LP-1") with a
+[time constant](https://en.wikipedia.org/wiki/Time_constant) of also 5:
+
+
+Both of these filters are extremes at opposite ends of a spectrum:
+- The SMA assigns a constant weight to the past 5 samples, but assigns zero
+  weight to all earlier samples.
+- The LP-1 weights past samples with an exponential decay, so "recent"
+  samples get more weight than "old" samples.
+
+Wouldn't it be nice to have a low-pass filter that is somewhere between
+those extremes, i.e., something that has the following impulse response?
+
+
+
+$$H(s) = \frac{1}{\tau s + 1}$$
