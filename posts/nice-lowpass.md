@@ -19,7 +19,7 @@ of 20, which corresponds to a
 [half-life](https://en.wikipedia.org/wiki/Half-life#Formulas_for_half-life_in_exponential_decay)
 of $20 \ln(2) \approx 13.9$:
 
-![SMA & EMA](/nice-lowpass/sma+ema.png)
+![SMA & EMA](posts/nice-lowpass/sma+ema.png)
 
 Both of these filters are extremes:
 - The SMA gives equal weight to the past 20 samples and then sharply drops off
@@ -30,7 +30,7 @@ Both of these filters are extremes:
 Wouldn't it be nice to have a filter that is a middle ground between these two
 extremes, something with the green impulse response below?
 
-![SMA, EMA & NLP](/nice-lowpass/sma+ema+nlp4.png)
+![SMA, EMA & NLP](posts/nice-lowpass/sma+ema+nlp4.png)
 
 Before going into details of how to construct such a filter, let's look at some
 of its desirable properties:
@@ -46,7 +46,7 @@ $$c \left(1 - \int_0^\infty \text{bump}(t) dt\right)$$
 
 where $c$ is a scaling factor and where $\text{bump}(t)$  is something like this:
 
-![SMA, EMA & NLP](/nice-lowpass/bump.png)
+![SMA, EMA & NLP](posts/nice-lowpass/bump.png)
 
 
 
