@@ -97,6 +97,11 @@ $$H_\text{LP-1}(s) = \frac{1}{\tau s + 1}$$
 
 where $\tau$ is the filter's
 [time constant](https://en.wikipedia.org/wiki/Time_constant).
+Higher-order filters (whose impulse responses are all "bumps" as
+we have seen above), can be expressed as
+
+$$H_\text{LP-n}(s) = H_\text{LP-1}(s)^n \frac{1}{(\tau s + 1)^n} \quad n \geq 2$$.
+
 Using the integral equation above, we can now formally define the
 transfer function of a nice low-pass filter of order $n \geq 2$
 based on a "bump" of order $n$ as
