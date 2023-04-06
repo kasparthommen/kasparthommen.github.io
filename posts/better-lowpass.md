@@ -1,24 +1,54 @@
-# A Better Low-Pass Filter
+# A "Nicer" Low-Pass Filter
 
-The two most popular low-pass filters (in DSP lingo) or moving averages
-(in the statistics world) are arguably the following:
+The two most popular
+[low-pass filters](https://en.wikipedia.org/wiki/Low-pass_filter)
+(in DSP lingo),
+also known as
+[moving averages](https://en.wikipedia.org/wiki/Moving_average)
+(in statistics terms), are arguably the following:
 
-- Simple moving average (SMA) aka FIR filter
-- Exponential moving average (EMA or EWMA) aka first-order lowpass filter
+- Simple moving average aka FIR filter, termed "SMA"
+- Exponential (or exponentially-weighted) moving average aka first-order lowpass filter, named "EMA"
 
-Let's say we want to average over a window length of 5 samples with the SMA
-and compare that to a first-order lowpass filter ("LP-1") with a
-[time constant](https://en.wikipedia.org/wiki/Time_constant) of also 5:
+Here's a visualization of their respective
+[impulse responses](https://en.wikipedia.org/wiki/Impulse_response)
+with
+an SMA window of 20 and an EMA
+[time constant](https://en.wikipedia.org/wiki/Time_constant)
+of 20, which corresponds to a
+[half-life](https://en.wikipedia.org/wiki/Half-life#Formulas_for_half-life_in_exponential_decay)
+of $20 \ln(2) \approx 13.9$:
+
+![SMA & EMA](/better-lowpass/sma+ema.png)
+
+Both of these filters are extremes:
+- The SMA gives equal weight to the past 20 samples and then sharply drops off
+  to zero.
+- The EMA weights drop of exponentially (hence the name) and thus lead to a long
+  tail.
+  
+Wouldn't it be nice to have a filter that is a middle ground between these two
+extremes, something with the green impulse response below?
+
+![SMA, EMA & NLP](/better-lowpass/sma+ema+nlp4.png)
+
+Before going into details of how to construct such a filter, let's look at some
+of its desirable properties:
+- It gives more weight to recent samples than the EMA but less than an SMA and
+  thus represents a middle ground between the two.
+- After the initial phase of giving a lot of weight to recent samples, it decays
+  much faster than the EMA (but not to zero like the SMA).
+
+So, how do we construct such a filter? Notice that the green impulse response
+looks like it could be constructed as
+
+$$c (1 - \int_0^\infty \text{bump}(t) dt)$$
+
+where $c$ is a scaling factor and where $\text{bump}(t)$  is something like this:
+
+![SMA, EMA & NLP](/better-lowpass/bump.png)
 
 
-Both of these filters are extremes at opposite ends of a spectrum:
-- The SMA assigns a constant weight to the past 5 samples, but assigns zero
-  weight to all earlier samples.
-- The LP-1 weights past samples with an exponential decay, so "recent"
-  samples get more weight than "old" samples.
-
-Wouldn't it be nice to have a low-pass filter that is somewhere between
-those extremes, i.e., something that has the following impulse response?
 
 
 
