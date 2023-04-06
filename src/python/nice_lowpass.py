@@ -29,13 +29,14 @@ y_sma[(t >= 0) & (t < tau)] = 1/tau
 
 
 # plot & save
-def finalize_plot(tau: float, file_name: str) -> None:
+def finalize_plot(tau: float, file_name: str, legend: bool=True) -> None:
     ax.set_xticks(np.linspace(0, T, 7))
     ax.set_xlim(0, T)
     ax.set_ylim(0, 1.05/tau)
     ax.spines[['right', 'top']].set_visible(False)
     ax.xaxis.set_zorder(99)
-    ax.legend()
+    if legend:
+        ax.legend()
     fig.tight_layout()
     plt.savefig(Path('posts/nice-lowpass')/file_name)
     plt.show()
@@ -72,6 +73,5 @@ finalize_plot(tau, "sma+nlps.png")
 fig, ax = plt.subplots(figsize=figsize)
 fig.suptitle('A "bump" function')
 lp4 = ZeroPole.lp1(w_pole=4/tau)**4
-label = f'Bump'
-ax.plot(t, lp4.impulse(T + 1), marker=marker, drawstyle=drawstyle, label=label)
-finalize_plot(tau, "bump.png")
+ax.plot(t, lp4.impulse(T + 1), marker=marker, drawstyle=drawstyle)
+finalize_plot(tau, "bump.png", legend=False)
