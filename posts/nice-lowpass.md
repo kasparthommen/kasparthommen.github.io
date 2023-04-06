@@ -100,13 +100,26 @@ where $\tau$ is the filter's
 Higher-order filters (whose impulse responses are all "bumps" as
 we have seen above), can be expressed as
 
-$$H_\text{LP-n}(s) = H_\text{LP-1}(s)^n \frac{1}{(\tau s + 1)^n} \quad n \geq 2$$.
+$$H_\text{LP-n}(s) = H_\text{LP-1}(s)^n = \frac{1}{(\tau s + 1)^n} \quad n \geq 2.$$
 
 Using the integral equation above, we can now formally define the
 transfer function of a nice low-pass filter of order $n \geq 2$
 based on a "bump" of order $n$ as
 
-$$H_\text{NLP-n}(s) = c \frac{1}{s} \left(1 - H_\text{LP-n} \right)$$
+$$H_\text{NLP-n}(s) = c \left( \frac{1}{s} - \frac{1}{s} H_\text{LP-n} \right)$$
 
+where the first $\frac{1}{2}$ is the result of the Laplace transform of $1$ and
+where the second one comes from integrating the bump function. Expanding,
+we find
+
+$$H_\text{NLP-n}(s) = c \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
+
+To find $c$, we impose that the step response of such a filter must settle
+at $1$, which translates to setting $s = j\omega = 0$:
+
+$$H_\text{NLP-n}(0) = c \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
+
+While mathematically correct, such a formulation doesn't lend itself well for
+(discretized) implementation due to the continm
 
 
