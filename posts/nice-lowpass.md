@@ -104,20 +104,42 @@ $$H_\text{LP-n}(s) = H_\text{LP-1}(s)^n = \frac{1}{(\tau s + 1)^n} \quad n \geq 
 
 Using the integral equation above, we can now formally define the
 transfer function of a nice low-pass filter of order $n \geq 2$
-based on a "bump" of order $n$ as
+based on a "bump" of order $n$, $H_\text{LP-n}$, as
 
 $$H_\text{NLP-n}(s) = c \left( \frac{1}{s} - \frac{1}{s} H_\text{LP-n} \right)$$
 
-where the first $\frac{1}{2}$ is the result of the Laplace transform of $1$ and
-where the second one comes from integrating the bump function. Expanding,
+where the first $\frac{1}{s}$ is the result of the Laplace transform of $1$ and
+where the second one results from integrating the bump function. Expanding,
 we find
 
 $$H_\text{NLP-n}(s) = c \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
 
 To find $c$, we impose that the step response of such a filter must settle
-at $1$, which translates to setting $s = j\omega = 0$:
+at $1$, meaning that at angular frequency $\omega = 0$, which implies
+$s = j \omega = 0$, we must have $H_\text{NLP-n}(0) = 1$. Re-arranging, we obtain
 
-$$H_\text{NLP-n}(0) = c \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
+$$H_\text{NLP-n}(s) = c \frac{1}{s} \frac{(\tau s + 1)^n - 1}{(\tau s + 1)^n}$$
+
+$$\quad = c \frac{(\tau s + 1)^n - 1}{s(\tau s + 1)^n}$$
+
+from which we can compute the limit for $s\rightarrow 0$ using
+[L'Hôpital's rule](https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule):
+
+$$1 = \lim_{s\rightarrow 0} H_\text{NLP-n}(s)$$
+
+$$\quad = \lim_{s\rightarrow 0} c \frac{n \tau (\tau s + 1)^{n-1}}{(\tau s + 1)^n + s n \tau (\tau s + 1)^{n-1}}$$
+
+$$\quad = c \frac{n\tau}{1}$$
+
+$$\quad = c n \tau,$$
+
+and thus
+
+$$c = \frac{1}{n \tau}.$$
+
+This leads to
+
+$$H_\text{NLP-n}(s) = \frac{1}{n \tau} \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
 
 While mathematically correct, such a formulation doesn't lend itself well for
 (discretized) implementation due to the continm
