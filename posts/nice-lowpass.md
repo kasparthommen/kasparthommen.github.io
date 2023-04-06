@@ -129,7 +129,7 @@ $$1 = \lim_{s\rightarrow 0} H_\text{NLP-n}(s)$$
 
 $$\quad = \lim_{s\rightarrow 0} c \frac{n \tau (\tau s + 1)^{n-1}}{(\tau s + 1)^n + s n \tau (\tau s + 1)^{n-1}}$$
 
-$$\quad = c \frac{n\tau}{1}$$
+$$\quad = c \frac{n\tau}{1 + 0}$$
 
 $$\quad = c n \tau,$$
 
@@ -142,6 +142,11 @@ This leads to
 $$H_\text{NLP-n}(s) = \frac{1}{n \tau} \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
 
 While mathematically correct, such a formulation doesn't lend itself well for
-(discretized) implementation due to the continm
+(discretized) implementation as integrating a difference that approaches zero for
+low frequencies can quickly lead to unstable result. Fortunately, there is a better
+way. After a bit of arithmetic, we find that
+
+$$H_\text{NLP-n}(s) = \frac{1}{n \tau} \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
 
 
+[geometric series](https://en.wikipedia.org/wiki/Geometric_series#Sum)
