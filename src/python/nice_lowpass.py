@@ -6,30 +6,6 @@ import numpy as np
 from src.python.zero_pole import ZeroPole
 
 
-class Lowpass1:
-    def __init__(self, tau: float) -> None:
-        self.tau = tau
-        self.y = 0
-
-    def filter(self, u: float) -> float:
-        self.y = (u + self.tau*self.y) / (self.tau + 1)
-        return self.y
-
-
-class NiceLowpass:
-    def __init__(self, order: int, tau: float) -> None:
-        self.lp1s = [Lowpass1(tau / order) for _ in range(order)]
-
-    def filter(self, u: float) -> float:
-        y_sum = 0
-        for lp1 in self.lp1s:
-            yi = lp1.filter(u)
-            y_sum += yi
-            u = yi
-
-        return y_sum / len(self.lp1s)
-
-
 # impulse responses
 T = 60
 tau = 20
@@ -61,7 +37,7 @@ def finalize_plot(tau: float, file_name: str) -> None:
     ax.xaxis.set_zorder(99)
     ax.legend()
     fig.tight_layout()
-    plt.savefig(Path('posts/better-lowpass')/file_name)
+    plt.savefig(Path('posts/nice-lowpass')/file_name)
     plt.show()
 
 
