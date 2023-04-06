@@ -14,7 +14,8 @@
 
 _March 2023_
 
-I set out to find a new kind of low-pass filter that combines the best of
+## Introduction and Motivation
+I have set out to find a new kind of low-pass filter that combines the best of
 the following filter types:
 
 - A simple moving average ("SMA") filter (aka equal-weighted FIR filter),
@@ -39,6 +40,7 @@ of $20 \ln(2) \approx 13.9$:
 ![SMA & EMA](/posts/nice-lowpass/sma+ema.png)
 
 
+## The Nice Low-Pass filter
 The new filter, termed **Nice Low-Pass**, should have an impulse response
 that "lies between" the SMA and LP-1:
 
@@ -70,6 +72,7 @@ Let us now specify the requirements for the nice low-pass in more detail:
 - No over- or undershooting.
 
 
+## Filter design
 How do we construct such a filter? Notice that the green impulse response
 looks like it could be constructed as
 
@@ -146,7 +149,38 @@ While mathematically correct, such a formulation doesn't lend itself well for
 low frequencies can quickly lead to unstable result. Fortunately, there is a better
 way. After a bit of arithmetic, we find that
 
-$$H_\text{NLP-n}(s) = \frac{1}{n \tau} \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
+$$H_\text{NLP-n}(s) = \frac{1}{n} \frac{1 - \displaystyle \frac{1}{(\tau s + 1)^n}}{\tau s}$$
+
+$$\quad = \frac{1}{n} \frac{\tau s + 1 - \displaystyle \frac{1}{(\tau s + 1)^n} - \tau s}{\tau s}$$
+
+$$\quad = \frac{1}{n} \frac{\tau s + 1 - \displaystyle \frac{1}{(\tau s + 1)^n}}{\tau s + 1 - 1} - 1$$
+
+$$\quad = \frac{1}{n} \frac{1 - \displaystyle \frac{1}{(\tau s + 1)^{n+1}}}{1 - \displaystyle \frac{1}{\tau s + 1}} - 1$$
+
+which, after noticing that this is a
+[geometric series](https://en.wikipedia.org/wiki/Geometric_series#Sum),
+results in
+
+$$H_\text{NLP-n}(s) = \frac{1}{n} \sum_{k=1}^n \frac{1}{(\tau s + 1)^n}$$
+
+or, more explicitly,
+
+$$H_\text{NLP-n}(s) = \frac{1}{n} \sum_{k=1}^n H_\text{LP-n}$$
+
+Thus, we can form a nice low-pass filter of order $n$ by simply averaging
+low-pass filters of orders $1, 2, \dots, n$ - a striking result!
 
 
-[geometric series](https://en.wikipedia.org/wiki/Geometric_series#Sum)
+## Implementation
+This filter can be implemented in a straightforward manner, namely by passing
+input samples through $n$ first-order low-pass filters connected in series
+and by adding the outputs of each stage (followed at the end by the division by $n$).
+This means that such a filter requires $n$ states and has computational
+complexity of $O(n)$. Unlike a moving average filter, however, which also
+requires $n$ states (the array of the past $n$ input samples), the nice
+low-pass can achieve much more smoothing for a given number of $n$. For example,
+the nice low-pass of order $4$ above achieves similar smoothing compared to
+the $20$-tap SMA filter.
+
+
+## Frequency and phase response
