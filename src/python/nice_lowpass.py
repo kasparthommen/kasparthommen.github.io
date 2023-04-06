@@ -47,14 +47,14 @@ marker = '.'
 lw = 0.5
 figsize = [8, 6]
 
-# SMA & EMA
+# SMA & LP-1
 fig, ax = plt.subplots(figsize=figsize)
 fig.suptitle('Simple and exponential moving averages')
 ax.plot(t, y_sma, marker=marker, drawstyle=drawstyle, lw=lw, label=f'FIR')
 ax.plot(t, lp1.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=f'LP-1')
 finalize_plot(tau, "sma+ema.png")
 
-# # SMA, EMA & NLP
+# # SMA, LP-1 & NLP
 fig, ax = plt.subplots(figsize=figsize)
 fig.suptitle('Adding a "nice low-pass" to the mix')
 ax.plot(t, y_sma, marker=marker, drawstyle=drawstyle, lw=lw, label=f'FIR')
@@ -70,7 +70,7 @@ finalize_plot(tau, "sma+ema+nlp4.png")
 #     nlp = nice_lowpass(order=order, tau=tau)
 #     label = f'NLP-{order}'
 #     if order == 1:
-#         label += f' = EMA'
+#         label += f' = LP-1'
 #     ax.plot(t, nlp.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=label)
 # finalize_plot(tau, "sma+nlps.png")
 
@@ -81,13 +81,11 @@ lp4 = ZeroPole.lp1(w_pole=4/tau)**4
 ax.plot(t, lp4.impulse(T + 1), marker=marker, drawstyle=drawstyle, lw=lw)
 finalize_plot(tau, "bump.png", legend=False)
 
-# EMA^n
+# LP-n
 fig, ax = plt.subplots(figsize=figsize)
-fig.suptitle('EMAs applied multiple times')
-for order in [1, 2, 4]:
+fig.suptitle('LP-n')
+for order in [1, 2, 4, 8]:
     nlp = ZeroPole.lp1(w_pole=4/tau)**order
     label = f'LP-{order}'
-    if order == 1:
-        label += f' = EMA'
     ax.plot(t, nlp.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=label)
 finalize_plot(tau, "lps.png", y_lim=4.2/tau)
