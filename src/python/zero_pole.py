@@ -354,7 +354,7 @@ class ZeroPole:
                 poles=[-tau],
             )
         elif type == ZeroPoleType.DIGITAL:
-            # H(z1) = h / (tau+h - tau*z1)
+            # H(z^-1) = h / (tau+h - tau*z^-1)
             return ZeroPole.digital(
                 gain=1 / (tau + 1),
                 zeros=[],

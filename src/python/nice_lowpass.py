@@ -7,7 +7,7 @@ from src.python.zero_pole import ZeroPole, ZeroPoleType
 
 
 # impulse responses
-type = ZeroPoleType.ANALOG
+type = ZeroPoleType.DIGITAL
 T = 60
 tau = 20
 t = np.arange(T+1)
@@ -60,7 +60,7 @@ fig, ax = plt.subplots(figsize=figsize)
 fig.suptitle('Adding a "nice low-pass" to the mix')
 ax.plot(t, y_sma, marker=marker, drawstyle=drawstyle, lw=lw, label=f'FIR')
 ax.plot(t, lp1.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=f'LP-1')
-ax.plot(t, nlp4.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=f'Nice Low-Pass')
+ax.plot(t, nlp4.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=f'Nice low-pass')
 finalize_plot(tau=tau, file_name="sma+ema+nlp4.png")
 
 # # NLPs
