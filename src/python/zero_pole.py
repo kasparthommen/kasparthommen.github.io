@@ -405,9 +405,9 @@ class ZeroPole:
 
     def __repr__(self) -> str:
         if self.type == ZeroPoleType.ANALOG:
-            return f'{ZeroPole.__name__}-{self.type}(gain={self.gain}, zeros={self.zeros}, poles={self.poles}, diffs={self.delay_or_diffs})'
+            return f'{ZeroPole.__name__}-{self.type.name}(gain={self.gain}, zeros={self.zeros}, poles={self.poles}, diffs={self.delay_or_diffs})'
         elif self.type == ZeroPoleType.DIGITAL:
-            return f'{ZeroPole.__name__}-{self.type}(gain={self.gain}, zeros={self.zeros}, poles={self.poles}, delay={self.delay_or_diffs})'
+            return f'{ZeroPole.__name__}-{self.type.name}(gain={self.gain}, zeros={self.zeros}, poles={self.poles}, delay={self.delay_or_diffs})'
         else:
             raise Exception
 

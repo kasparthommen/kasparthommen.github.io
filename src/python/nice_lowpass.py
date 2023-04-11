@@ -48,12 +48,14 @@ marker = '.'
 lw = 0.5
 figsize = [8, 6]
 
+
 # SMA & LP-1
 fig, ax = plt.subplots(figsize=figsize)
 fig.suptitle('Simple and exponential moving averages')
 ax.plot(t, y_sma, marker=marker, drawstyle=drawstyle, lw=lw, label=f'FIR')
 ax.plot(t, lp1.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=f'LP-1')
 finalize_plot(tau=tau, file_name="sma+ema.png")
+
 
 # # SMA, LP-1 & NLP
 fig, ax = plt.subplots(figsize=figsize)
@@ -62,6 +64,7 @@ ax.plot(t, y_sma, marker=marker, drawstyle=drawstyle, lw=lw, label=f'FIR')
 ax.plot(t, lp1.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=f'LP-1')
 ax.plot(t, nlp4.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=f'Nice low-pass')
 finalize_plot(tau=tau, file_name="sma+ema+nlp4.png")
+
 
 # # NLPs
 # fig, ax = plt.subplots(figsize=figsize)
@@ -74,6 +77,7 @@ finalize_plot(tau=tau, file_name="sma+ema+nlp4.png")
 #         label += f' = LP-1'
 #     ax.plot(t, nlp.impulse(T+1), marker=marker, drawstyle=drawstyle, lw=lw, label=label)
 # finalize_plot(tau=tau, file_name="sma+nlps.png")
+
 
 # bump
 fig, ax = plt.subplots(figsize=figsize)
@@ -92,30 +96,47 @@ for order in [1, 2, 4, 8]:
 finalize_plot(tau=tau, file_name="lps.png", y_lim=4.2/tau)
 
 
-w = np.linspace(1e-4/1.5, 1.5, 10000)
-fig, [ax1, ax2] = plt.subplots(figsize=[figsize[0], 1.6*figsize[1]], nrows=2)
-fig.suptitle('Bode plot')
-ax1.set_title('Magnitude response [dB]')
-ax2.set_title('Phase response [deg]')
-ax1.axvline(1e-2, c='m', label=r'$\omega_0 = 1/\tau_0$')
-ax2.axvline(1e-2, c='m', label=r'$\omega_0 = 1/\tau_0$')
-for order in [1, 2, 4, 8]:
-    nlp = nice_lowpass(order=order, tau=100)
-    label = f'NLP-{order}' if order >= 2 else 'LP-1'
-    mag = nlp.magnitude(w)
-    mag_db = 10*np.log10(mag)
-    ax1.semilogx(w, mag_db, label=label)
-    ax2.semilogx(w, nlp.phase(w)*180/np.pi, label=label)
-ax1.spines[['right', 'top']].set_visible(False)
-ax2.spines[['right', 'top']].set_visible(False)
-ax1.xaxis.set_zorder(99)
-ax2.xaxis.set_zorder(99)
-ax1.legend()
-ax2.legend()
-ax1.yaxis.set_major_locator(MultipleLocator(10))
-ax2.yaxis.set_major_locator(MultipleLocator(45))
-ax1.grid(True)
-ax2.grid(True)
-fig.tight_layout()
-plt.savefig(Path('posts/nice-lowpass') / 'bode.png')
-plt.show()
+# Bode plot
+for show_sma in [False, True]:
+    tau = 100
+    w = np.linspace(1e-4/1.1, 1.1, 100000)
+    fig, [ax1, ax2] = plt.subplots(figsize=[figsize[0], 1.6*figsize[1]], nrows=2)
+    fig.suptitle('Bode plot')
+    ax1.set_title('Magnitude response [dB]')
+    ax2.set_title('Phase response [deg]')
+    ax1.axvline(1e-2, ls='--', c='k', label=r'$\omega_0 = 1/\tau_0$')
+    ax2.axvline(1e-2, ls='--', c='k', label=r'$\omega_0 = 1/\tau_0$')
+    for order in [1, 2, 4, 8, None]:
+        if order is None:
+            if show_sma:
+                # SMA
+                sma = sum([ZeroPole.digital(gain=1, zeros=[], poles=[], delay=i) for i in range(tau)]) / tau
+                mag = sma.magnitude(w)
+                phase = sma.phase(w)
+                label = 'SMA'
+            else:
+                continue
+        else:
+            nlp = nice_lowpass(order=order, tau=tau)
+            label = f'NLP-{order}' if order >= 2 else 'LP-1'
+            mag = nlp.magnitude(w)
+            phase = nlp.phase(w)
+
+        mag_db = 10*np.log10(mag)
+        ax1.semilogx(w, mag_db, label=label)
+        ax2.semilogx(w, phase * 180 / np.pi, label=label)
+    ax1.spines[['right', 'top']].set_visible(False)
+    ax2.spines[['right', 'top']].set_visible(False)
+    ax1.xaxis.set_zorder(99)
+    ax2.xaxis.set_zorder(99)
+    ax1.legend()
+    ax2.legend()
+    ax1.yaxis.set_major_locator(MultipleLocator(10))
+    ax2.yaxis.set_major_locator(MultipleLocator(45))
+    ax1.grid(True)
+    ax2.grid(True)
+    ax1.set_ylim([-30, 1])
+    fig.tight_layout()
+    file_name = 'bode-sma.png' if show_sma else 'bode.png'
+    plt.savefig(Path('posts/nice-lowpass') / file_name)
+    plt.show()
