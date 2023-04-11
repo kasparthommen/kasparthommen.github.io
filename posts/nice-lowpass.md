@@ -189,7 +189,13 @@ Low-Pass can achieve much more smoothing for a given number of $n$.
 
 
 ## Frequency and phase response
-The chart below shows frequency and phase responses as
+The chart below shows magnitude and phase responses as
 [Bode plots](https://en.wikipedia.org/wiki/Bode_plot).
 
 ![Bode plots](/posts/nice-lowpass/bode.png)
+
+The following Bode plot shows the SMA on top. Note that the Nice Low-Pass
+filters lie indeed "between" the LP-1 and the SMA, both in terms of
+magnitude and frequency response.
+
+![Bode plots](/posts/nice-lowpass/bode-sma.png)
