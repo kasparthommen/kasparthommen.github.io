@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from src.python.zero_pole import ZeroPole, ZeroPoleType
-
+from matplotlib.ticker import MultipleLocator
 
 # impulse responses
 type = ZeroPoleType.ANALOG
@@ -92,8 +92,8 @@ for order in [1, 2, 4, 8]:
 finalize_plot(tau=tau, file_name="lps.png", y_lim=4.2/tau)
 
 
-w = np.linspace(0, 0.5, 1000)
-fig, [ax1, ax2] = plt.subplots(figsize=[figsize[0], 2*figsize[1]], nrows=2)
+w = np.linspace(1e-4/1.5, 1.5, 10000)
+fig, [ax1, ax2] = plt.subplots(figsize=[figsize[0], 1.6*figsize[1]], nrows=2)
 fig.suptitle('Bode plot')
 ax1.set_title('Magnitude response')
 ax2.set_title('Phase response [deg]')
@@ -114,6 +114,9 @@ ax1.xaxis.set_zorder(99)
 ax2.xaxis.set_zorder(99)
 # ax1.set_yticks(np.arange(0, min_mag_db, -3))
 ax1.legend()
+ax2.yaxis.set_major_locator(MultipleLocator(45))
+ax1.grid(True)
+ax2.grid(True)
 fig.tight_layout()
 plt.savefig(Path('posts/nice-lowpass') / 'bode.png')
 plt.show()
