@@ -18,24 +18,31 @@ _March 2023_
 I have set out to find a new kind of low-pass filter that combines the best of
 the following filter types:
 
-- A simple moving average ("SMA") filter (aka equal-weighted FIR filter),
-  which is easy to implement (ring buffer, little computation), has limited
-  "tail weights" (weights are zero beyond the filter length), but which
-  has an unnatural transition from assigning non-zero weights for all
-  samples in the kernel to zero for the next sample and beyond.
+- **[Simple moving average ("SMA")](https://en.wikipedia.org/wiki/Moving_average#Simple_moving_average)**
+  filter (aka equal-weighted FIR filter):
+  - Pros:
+    - Easy to implement (ring buffer, little computation)
+    - Has limited "tail weights" (weights are zero beyond the filter length)
+  - Cons:
+    - High storage requirement: $O(n)$ for an $n$-tap filter
+    - Has an unnatural transition from assigning non-zero weights for all
+      samples in the kernel to zero for the next sample and beyond
 
-- A
-  [first-order order low-pass](https://en.wikipedia.org/wiki/Low-pass_filter#First_order)
-  ("LP-1") filter, which is
-  cheap to implement and store, but which doesn't given enough weight to
-  "recent" samples and has a long tail due to its exponential decay.
+- **[First-order order low-pass ("LP-1")](https://en.wikipedia.org/wiki/Low-pass_filter#First_order)**
+  filter:
+  - Pros:
+    - Cheap to implement and store
+  - Cons:
+    - Doesn't given enough weight to "recent" samples (due to the immediate
+      exponential drop-off)
+    - Has a long tail (again due to its exponential decay)
 
 These two filter types are shown below. The SMA has a kernel length of 20
 and the LP-a has a
 [time constant](https://en.wikipedia.org/wiki/Time_constant)
-of 20, which corresponds to a
+of $\tau=20$, which corresponds to a
 [half-life](https://en.wikipedia.org/wiki/Half-life#Formulas_for_half-life_in_exponential_decay)
-of $20 \ln(2) \approx 13.9$:
+of $\lambda = 20 \ln(2) \approx 13.9$:
 
 ![SMA & EMA](/posts/nice-lowpass/sma+ema.png)
 
@@ -46,7 +53,7 @@ that "lies between" the SMA and LP-1:
 
 ![SMA, EMA & NLP](/posts/nice-lowpass/sma+ema+nlp4.png)
 
-Let us now specify the requirements for the nice low-pass in more detail:
+Let us now specify the requirements for the Nice Low-Pass in more detail:
 
 - It must be cheap in terms of storage and computation, which suggests
   an
@@ -59,9 +66,8 @@ Let us now specify the requirements for the nice low-pass in more detail:
   [FFTs](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
   (which is a non-trivial endeavour).
 
-- The impulse response should start flat (similar to a simple moving
-  average) to reflect the fact that recent samples should have high
-  and similar weight.
+- The impulse response should start flat (similar to a SMA) to reflect
+  the fact that recent samples should have high and similar weight.
 
 - The impulse response should monotonically decay (to zero), because
   older samples should get less weight than more recent ones.
@@ -78,12 +84,13 @@ looks like it could be constructed as
 
 $$c \left(1 - \int_0^\infty \text{bump}(t) dt\right)$$
 
-where $c$ is a scaling factor and where $\text{bump}(t)$ is something like this:
+where $c$ is an appropriate scaling factor and where $\text{bump}(t)$ is
+something like this:
 
 ![SMA, EMA & NLP](/posts/nice-lowpass/bump.png)
 
 We can easily construct such a bump function by repeated filtering
-using first-order low-pass filters:
+an impulse using first-order low-pass filters connected in series:
 
 ![SMA, EMA & NLP](/posts/nice-lowpass/lps.png)
 
@@ -106,16 +113,16 @@ we have seen above), can be expressed as
 $$H_\text{LP-n}(s) = H_\text{LP-1}(s)^n = \frac{1}{(\tau s + 1)^n} \quad n \geq 2.$$
 
 Using the integral equation above, we can now formally define the
-transfer function of a nice low-pass filter of order $n \geq 2$
+transfer function of a Nice Low-Pass filter of order $n \geq 2$
 based on a "bump" of order $n$, $H_\text{LP-n}$, as
 
-$$H_\text{NLP-n}(s) = c \left( \frac{1}{s} - \frac{1}{s} H_\text{LP-n} \right)$$
+$$H_\text{NLP-n}(s) = c \left( \frac{1}{s} - \frac{1}{s} H_\text{LP-n}(s) \right)$$
 
 where the first $\frac{1}{s}$ is the result of the Laplace transform of $1$ and
 where the second one results from integrating the bump function. Expanding,
 we find
 
-$$H_\text{NLP-n}(s) = c \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
+$$H_\text{NLP-n}(s) = c \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right).$$
 
 To find $c$, we impose that the step response of such a filter must settle
 at $1$, meaning that at angular frequency $\omega = 0$, which implies
@@ -142,7 +149,7 @@ $$c = \frac{1}{n \tau}.$$
 
 This leads to
 
-$$H_\text{NLP-n}(s) = \frac{1}{n \tau} \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right)$$
+$$H_\text{NLP-n}(s) = \frac{1}{n \tau} \frac{1}{s} \left(1 - \frac{1}{(\tau s + 1)^n} \right).$$
 
 While mathematically correct, such a formulation doesn't lend itself well for
 (discretized) implementation as integrating a difference that approaches zero for
@@ -167,7 +174,7 @@ or, more explicitly,
 
 $$H_\text{NLP-n}(s) = \frac{1}{n} \sum_{k=1}^n H_\text{LP-n}(s).$$
 
-Thus, we can form a nice low-pass filter of order $n$ by simply averaging
+Thus, we can construct a Nice Low-Pass filter of order $n$ by simply averaging
 low-pass filters of orders $1, 2, \dots, n$ - a striking result.
 
 
