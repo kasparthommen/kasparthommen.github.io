@@ -168,19 +168,21 @@ or, more explicitly,
 $$H_\text{NLP-n}(s) = \frac{1}{n} \sum_{k=1}^n H_\text{LP-n}(s).$$
 
 Thus, we can form a nice low-pass filter of order $n$ by simply averaging
-low-pass filters of orders $1, 2, \dots, n$ - a striking result!
+low-pass filters of orders $1, 2, \dots, n$ - a striking result.
 
 
 ## Implementation
 This filter can be implemented in a straightforward manner, namely by passing
 input samples through $n$ first-order low-pass filters connected in series
-and by adding the outputs of each stage (followed at the end by the division by $n$).
+and by adding the outputs of each stage (followed by the division by $n$ at the end).
 This means that such a filter requires $n$ states and has computational
 complexity of $O(n)$. Unlike a moving average filter, however, which also
-requires $n$ states (the array of the past $n$ input samples), the nice
-low-pass can achieve much more smoothing for a given number of $n$. For example,
-the nice low-pass of order $4$ above achieves similar smoothing compared to
-the $20$-tap SMA filter.
+requires $n$ states (the array of the past $n$ input samples), the Nice
+Low-Pass can achieve much more smoothing for a given number of $n$.
 
 
 ## Frequency and phase response
+The chart below shows frequency and phase responses as
+[Bode plots](https://en.wikipedia.org/wiki/Bode_plot).
+
+![Bode plots](/posts/nice-lowpass/bode.png)
