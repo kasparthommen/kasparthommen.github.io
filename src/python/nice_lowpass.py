@@ -7,7 +7,7 @@ from src.python.zero_pole import ZeroPole, ZeroPoleType
 
 
 # impulse responses
-type = ZeroPoleType.DIGITAL
+type = ZeroPoleType.ANALOG
 T = 60
 tau = 20
 t = np.arange(T+1)

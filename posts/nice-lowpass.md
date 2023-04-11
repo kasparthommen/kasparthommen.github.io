@@ -157,7 +157,7 @@ $$\quad = \frac{1}{n} \frac{\tau s + 1 - \displaystyle \frac{1}{(\tau s + 1)^n}}
 
 $$\quad = \frac{1}{n} \frac{1 - \displaystyle \frac{1}{(\tau s + 1)^{n+1}}}{1 - \displaystyle \frac{1}{\tau s + 1}} - 1$$
 
-which, after noticing that this is a
+which, after observing that this is a
 [geometric series](https://en.wikipedia.org/wiki/Geometric_series#Sum),
 results in
 
@@ -165,7 +165,7 @@ $$H_\text{NLP-n}(s) = \frac{1}{n} \sum_{k=1}^n \frac{1}{(\tau s + 1)^n}$$
 
 or, more explicitly,
 
-$$H_\text{NLP-n}(s) = \frac{1}{n} \sum_{k=1}^n H_\text{LP-n}$$
+$$H_\text{NLP-n}(s) = \frac{1}{n} \sum_{k=1}^n H_\text{LP-n}(s).$$
 
 Thus, we can form a nice low-pass filter of order $n$ by simply averaging
 low-pass filters of orders $1, 2, \dots, n$ - a striking result!
