@@ -194,8 +194,8 @@ The chart below shows magnitude and phase responses as
 
 ![Bode plots](/posts/nice-lowpass/bode.png)
 
-The following Bode plot shows the SMA on top. Note that the Nice Low-Pass
-filters lie indeed "between" the LP-1 and the SMA, both in terms of
-magnitude and frequency response.
+The following Bode plot shows the SMA as well for comparison. Note that the
+Nice Low-Pass filters lie indeed "between" the LP-1 and the SMA, both in terms
+of magnitude and frequency response.
 
 ![Bode plots](/posts/nice-lowpass/bode-sma.png)
