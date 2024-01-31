@@ -160,9 +160,9 @@ $$H_\text{NLP-n}(s) = \frac{1}{n} \frac{1 - \displaystyle \frac{1}{(\tau s + 1)^
 
 $$\quad = \frac{1}{n} \frac{\tau s + 1 - \displaystyle \frac{1}{(\tau s + 1)^n} - \tau s}{\tau s}$$
 
-$$\quad = \frac{1}{n} \frac{\tau s + 1 - \displaystyle \frac{1}{(\tau s + 1)^n}}{\tau s + 1 - 1} - 1$$
+$$\quad = \frac{1}{n} \left( \frac{\tau s + 1 - \displaystyle \frac{1}{(\tau s + 1)^n}}{\tau s + 1 - 1} - 1 \right)$$
 
-$$\quad = \frac{1}{n} \frac{1 - \displaystyle \frac{1}{(\tau s + 1)^{n+1}}}{1 - \displaystyle \frac{1}{\tau s + 1}} - 1$$
+$$\quad = \frac{1}{n} \left( \frac{1 - \displaystyle \frac{1}{(\tau s + 1)^{n+1}}}{1 - \displaystyle \frac{1}{\tau s + 1}} - 1 \right)$$
 
 which, after observing that this is a
 [geometric series](https://en.wikipedia.org/wiki/Geometric_series#Sum),
